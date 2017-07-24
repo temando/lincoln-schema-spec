@@ -10,13 +10,13 @@ This simplified schema is designed to allow UI projects to simply display data a
 
 ## Installation
 
-```
-$ npm install @temando/lincoln-schema-spec
+```sh
+npm install @temando/lincoln-schema-spec
 ```
 
 ## Usage
 
-```
+```js
 var schema = require('@temando/lincoln-schema-spec');
 
 console.log(schema); // POJO, JSON Schema Draft 6
