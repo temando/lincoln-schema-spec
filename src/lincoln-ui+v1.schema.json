@@ -1,0 +1,421 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema",
+  "type": "object",
+  "required": [
+    "title",
+    "version",
+    "navigation",
+    "services"
+  ],
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "info": {
+      "type": "object",
+      "$ref": "#/definitions/info"
+    },
+    "security": {
+      "type": "object",
+      "$ref": "#/definitions/securityItem"
+    },
+    "navigation": {
+      "type": "array",
+      "description": "Contains information suitable for constructing a navigation.",
+      "items": {
+        "$ref": "#/definitions/navigationItem"
+      }
+    },
+    "services": {
+      "type": "array",
+      "description": "Contains all the methods of this schema, optionally grouped by tag",
+      "items": {
+        "$ref": "#/definitions/serviceItem"
+      }
+    }
+  },
+  "definitions": {
+    "docs": {
+      "type": "object",
+      "description": "Additional documentation, usually external.",
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "info": {
+      "type": "object",
+      "description": "Meta-data about this schema, such as contact information or additional documentation.",
+      "properties": {
+        "termsOfService": {
+          "type": "string",
+          "format": "uri"
+        },
+        "contact": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        },
+        "license": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "docs": {
+          "$ref": "#/definitions/docs"
+        }
+      }
+    },
+    "navigationItem": {
+      "type": "object",
+      "anyOf": [
+        {
+          "required": [
+            "title",
+            "methods"
+          ]
+        },
+        {
+          "$ref": "#/definitions/methodItem"
+        }
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "handle": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "docs": {
+          "$ref": "#/definitions/docs"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/methodItem"
+          }
+        }
+      }
+    },
+    "methodItem": {
+      "type": "object",
+      "required": [
+        "type",
+        "title",
+        "link"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        }
+      }
+    },
+    "serviceItem": {
+      "type": "object",
+      "required": [
+        "title",
+        "methods"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "type",
+              "title",
+              "link",
+              "path",
+              "request",
+              "responses"
+            ],
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/schemaItem"
+                    }
+                  },
+                  "header": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/schemaItem"
+                    }
+                  },
+                  "cookie": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/schemaItem"
+                    }
+                  }
+                }
+              },
+              "request": {
+                "$ref": "#/definitions/httpItem"
+              },
+              "response": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "HTTP status code for the response"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/definitions/httpItem"
+                    }
+                  ]
+                }
+              },
+              "endpoints": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "url"
+                  ],
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "security": {
+                "$ref": "#/definitions/securityItem"
+              }
+            }
+          }
+        }
+      },
+      "constraints": {
+        "type": "object",
+        "description": "A sub-set of supported constraints where the meaning matches http://json-schema.org/latest/json-schema-validation.html",
+        "properties": {
+          "format": {
+            "type": "string"
+          },
+          "exclusiveMinimum": {
+            "type": "integer"
+          },
+          "exclusiveMaximum": {
+            "type": "integer"
+          },
+          "maximum": {
+            "type": "integer"
+          },
+          "maxItems": {
+            "type": "integer"
+          },
+          "maxLength": {
+            "type": "integer"
+          },
+          "maxProperties": {
+            "type": "integer"
+          },
+          "minimum": {
+            "type": "integer"
+          },
+          "minItems": {
+            "type": "integer"
+          },
+          "minLength": {
+            "type": "integer"
+          },
+          "minProperties": {
+            "type": "integer"
+          },
+          "multipleOf": {
+            "type": "integer"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "uniqueItems": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "httpItem": {
+      "type": "object",
+      "description": "TODO: Why is this an object?",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/schemaItem"
+          }
+        },
+        "examples": {
+          "type": "array"
+        }
+      }
+    },
+    "schemaItem": {
+      "type": "object",
+      "required": [
+        "name",
+        "type",
+        "required"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "uniqueItems": true,
+            "minItems": 1
+          }
+        },
+        "subtype": {
+          "type": "string",
+          "description": "Used to describe the type of array items when `type = array`."
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "default": {
+          "type": "string"
+        },
+        "additionalProperties": {
+          "type": "boolean"
+        },
+        "enum": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        },
+        "constraints": {
+          "$ref": "#/definitions/constraints"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "isAdditionalProperties": {
+              "type": "boolean"
+            }
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/schemaItem"
+          }
+        },
+        "docs": {
+          "$ref": "#/definitions/docs"
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "securityItem": {
+      "type": "object",
+      "description": "TODO: Finish me",
+      "patternProperties": {
+        "/a-z_/": {}
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "in": {
+            "type": "string"
+          },
+          "example": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@temando/lincoln-schema-spec",
+  "version": "0.1.0",
+  "description": "Specification for the schema that Lincoln understands, and can visualise.",
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "lincoln",
+    "openapi"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "tape 'test/*.js' | tap-spec"
+  },
+  "devDependencies": {
+    "ajv": "^5.2.2",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.7.0"
+  }
+}

@@ -1,0 +1,1 @@
+module.exports = require('./lincoln-ui+v1.schema.json');
