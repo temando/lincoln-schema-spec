@@ -1,5 +1,5 @@
 {
-  "name": "@temando/lincoln-schema-spec",
+  "name": "lincoln-schema-spec",
   "version": "0.1.0",
   "description": "Specification for the schema that Lincoln understands, and can visualise.",
   "main": "src/index.js",

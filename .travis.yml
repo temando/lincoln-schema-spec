@@ -12,7 +12,7 @@ before_deploy:
 - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > ~/.npmrc
 
 deploy:
-  provider: npm
+  provider: script
   skip_cleanup: true
   script: npm publish .
   on:
